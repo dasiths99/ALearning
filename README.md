@@ -1,2 +1,0 @@
-# ALearning
-ISDM Project
