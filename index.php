@@ -52,14 +52,10 @@ session_start();
                 <a href="courses.php" class="nav-item nav-link">Courses</a>
 
                 <?php if (isset($_SESSION['loggedin']) && $_SESSION['loggedin']): ?>
-                    <li><a href="logout.php">Logout</a></li>
+                    <a href="logout.php" class="btn btn-primary py-4 px-lg-5 d-none d-lg-block">Logout<i class="fa fa-arrow-right ms-3"></i></a>
                 <?php else: ?>
-                    <li><a href="login.html">Login</a></li>
+                    <a href="login.html" class="btn btn-primary py-4 px-lg-5 d-none d-lg-block">Login<i class="fa fa-arrow-right ms-3"></i></a>
                 <?php endif; ?>
-
-                <div class="nav-item dropdown"></div>
-            <a href="login.html" class="btn btn-primary py-4 px-lg-5 d-none d-lg-block">Login<i class="fa fa-arrow-right ms-3"></i></a>
-        </div>
     </nav>
     <!-- Navbar End -->
 
