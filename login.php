@@ -29,7 +29,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 // Redirect user based on role
                 switch ($row['job']) {
                     case 'Admin':
-                        header("location: admin_dashboard.php");
+                        header("location: index.php");
                         exit;
                     case 'Intern':
                         header("location: index.html");
