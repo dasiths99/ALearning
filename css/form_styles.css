@@ -1,0 +1,131 @@
+body {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    font-family: 'Jost', sans-serif;
+    background: linear-gradient(to bottom, #e0f7ff, #4ab8ff, #0072bc);
+}
+
+.main {
+    width: 400px;
+    height: auto; 
+    background: url("https://doc-08-2c-docs.googleusercontent.com/docs/securesc/68c90smiglihng9534mvqmq1946dmis5/fo0picsp1nhiucmc0l25s29respgpr4j/1631524275000/03522360960922298374/03522360960922298374/1Sx0jhdpEpnNIydS4rnN4kHSJtU1EyWka?e=view&authuser=0&nonce=gcrocepgbb17m&user=03522360960922298374&hash=tfhgbs86ka6divo3llbvp93mg4csvb38") no-repeat center/cover;
+    border-radius: 10px;
+    box-shadow: 5px 20px 50px #000;
+    padding: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.signup, .login {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+label {
+    color: #000000;
+    font-size: 2em;
+    margin: 30px 0 20px 0;
+    font-weight: bold;
+    text-align: center;
+}
+
+input {
+    width: 80%;
+    padding: 12px;
+    margin: 10px 0;
+    border-radius: 5px;
+    border: 2px solid #000000;
+    font-size: 1em;
+    outline: none;
+    color: #0072bc;
+}
+
+select {
+    width: 80%;
+    padding: 12px;
+    margin: 10px 0;
+    border-radius: 5px;
+    background-color: #ffffff;
+    color: #000000;
+    border: 2px solid #000000;
+    font-size: 1em;
+    outline: none;
+}
+
+button {
+    width: 80%;
+    padding: 15px;
+    margin-top: 20px;
+    background-color: #005288;
+    color: white;
+    font-size: 1.2em;
+    font-weight: bold;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    border: none;
+}
+
+button:hover {
+    background-color: #0c4f80;
+}
+
+.login-btn {
+    background-color: #444444;
+    margin-top: 10px;
+    color: white;
+}
+
+.login-btn:hover {
+    background-color: #666666;
+}
+
+.login-form {
+    height: auto;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.logo {
+    width: 120px;
+    height: auto;
+    margin-bottom: 0.5px;
+}
+
+.home-button {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 50px;
+    height: 50px;
+    background-color: #0072bc;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.home-button img {
+    width: 120%;
+    height: auto;
+}
