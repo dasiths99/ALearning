@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Education Website</title>
+    <link rel="stylesheet" href="css/course.css">
+            <!-- Google Web Fonts -->
+            <link rel="preconnect" href="https://fonts.googleapis.com">
+            <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+            <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600&family=Nunito:wght@600;700;800&display=swap" rel="stylesheet">
+        
+            <!-- Icon Font Stylesheet -->
+            <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+            <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+        
+            <!-- Libraries Stylesheet -->
+            <link href="lib/animate/animate.min.css" rel="stylesheet">
+            <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+        
+            <!-- Customized Bootstrap Stylesheet -->
+            <link href="css/bootstrap.min.css" rel="stylesheet">
+        
+            <!-- Template Stylesheet -->
+            <link href="css/style.css" rel="stylesheet">
+</head>
+<body>
+
+    <!-- Navbar Start -->
+    <nav class="navbar navbar-expand-lg bg-white navbar-light shadow sticky-top p-0">
+        <a href="index.html" class="navbar-brand d-flex align-items-center px-4 px-lg-5">
+            <img src="img/logo.png">
+        </a>
+        <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+            <div class="navbar-nav ms-auto p-4 p-lg-0">
+                <a href="index.php" class="nav-item nav-link active">Home</a>
+                <a href="#" class="nav-item nav-link">Profile</a>
+    </nav>
+    <!-- Navbar End -->
+
+
+<header>
+    <h1>Learn & Quiz</h1>
+    <p>Your Path to Success</p>
+</header>
+
+<section>
+    <div class="video-container">
+        <h2>Course Video</h2>
+        <video controls>
+            <source src="course-video.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+    </div>
+</section>
+
+<section class="quiz-section">
+    <h3>Test Your Knowledge</h3>
+    <form id="quizForm">
+        <label>1. What is the capital of France?</label>
+        <input type="radio" name="q1" value="Paris"> Paris<br>
+        <input type="radio" name="q1" value="London"> London<br>
+        <input type="radio" name="q1" value="Berlin"> Berlin<br>
+        <input type="radio" name="q1" value="Rome"> Rome<br><br>
+
+        <label>2. Which is the largest planet in our solar system?</label>
+        <input type="radio" name="q2" value="Earth"> Earth<br>
+        <input type="radio" name="q2" value="Jupiter"> Jupiter<br>
+        <input type="radio" name="q2" value="Mars"> Mars<br>
+        <input type="radio" name="q2" value="Venus"> Venus<br><br>
+
+        <button type="button" id="submitButton" onclick="submitQuiz()">Submit Quiz</button>
+    </form>
+
+    <div id="result" class="result"></div>
+    <button id="retryButton" class="retry-button" style="display: none;" onclick="retryQuiz()">Retry Quiz</button>
+</section>
+
+<script>
+    // Correct answers from backend
+    const correctAnswers = {
+        q1: "Paris",
+        q2: "Jupiter"
+    };
+
+    function submitQuiz() {
+        let score = 0;
+        let totalQuestions = 2; // Number of questions in the quiz
+
+        // Get answers
+        const q1 = document.querySelector('input[name="q1"]:checked');
+        const q2 = document.querySelector('input[name="q2"]:checked');
+
+        // Check answers
+        if (q1) {
+            if (q1.value === correctAnswers.q1) {
+                score++;
+            }
+        }
+
+        if (q2) {
+            if (q2.value === correctAnswers.q2) {
+                score++;
+            }
+        }
+
+        // Calculate percentage
+        const percentage = (score / totalQuestions) * 100;
+
+        // Display result
+        const result = document.getElementById('result');
+        const retryButton = document.getElementById('retryButton');
+        const submitButton = document.getElementById('submitButton');
+        
+        result.style.display = 'block';
+        result.style.opacity = 1;
+
+        if (percentage >= 75) {
+            result.classList.remove('failure');
+            result.classList.add('success');
+            result.innerHTML = `Great job! You scored ${percentage}%.`;
+            retryButton.style.display = 'none'; // Hide retry button if 75% or more
+        } else {
+            result.classList.remove('success');
+            result.classList.add('failure');
+            result.innerHTML = `Oops! You scored ${percentage}%. Please try again.`;
+            retryButton.style.display = 'block'; // Show retry button if less than 75%
+        }
+
+        // Disable radio buttons after submission
+        disableQuiz();
+
+        // Hide submit button after submission
+        submitButton.style.display = 'none';
+    }
+
+    function disableQuiz() {
+        // Disable all radio buttons
+        document.querySelectorAll('input[type="radio"]').forEach(el => el.disabled = true);
+    }
+
+    function retryQuiz() {
+        // Clear selections
+        document.querySelectorAll('input[type="radio"]:checked').forEach(el => el.checked = false);
+
+        // Re-enable all radio buttons
+        document.querySelectorAll('input[type="radio"]').forEach(el => el.disabled = false);
+
+        // Hide result and feedback
+        const result = document.getElementById('result');
+        result.style.display = 'none';
+
+        // Show submit button again
+        const submitButton = document.getElementById('submitButton');
+        submitButton.style.display = 'block';
+
+        // Hide retry button
+        const retryButton = document.getElementById('retryButton');
+        retryButton.style.display = 'none';
+    }
+</script>
+
+</body>
+</html>
