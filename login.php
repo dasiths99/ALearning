@@ -1,35 +1,35 @@
 <?php
-session_start(); // Start or resume the session
+session_start(); 
 
-include 'db.php'; // Ensure this file contains the necessary database connection setup
+include 'db.php'; 
 
-// Check if the form is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $email = $conn->real_escape_string($_POST['email']); // Retrieve and escape the email
-    $password = $_POST['password']; // Retrieve the password directly
-    $job = $_POST['job']; // Assuming the job is posted from the form, which might not be the case
+    $email = $conn->real_escape_string($_POST['email']); 
+    $password = $_POST['password']; 
+     
 
-    // SQL to check the existence of the user with the given email, and fetch the job
-    $sql = "SELECT id, password, job FROM user WHERE email = ?"; // Include job in your SQL query
+   
+    $sql = "SELECT id, name, password, job FROM user WHERE email = ?"; 
     if ($stmt = $conn->prepare($sql)) {
-        $stmt->bind_param("s", $email); // Bind the email variable to the query
-        $stmt->execute(); // Execute the query
-        $result = $stmt->get_result(); // Get the result of the query
+        $stmt->bind_param("s", $email); 
+        $stmt->execute(); 
+        $result = $stmt->get_result(); 
 
-        // Check if there is exactly one user with this email
+        
         if ($result->num_rows == 1) {
-            $row = $result->fetch_assoc(); // Fetch the result row as an associative array
-            if ($password === $row['password']) { // Direct comparison
-                // Password is correct, set up session variables
+            $row = $result->fetch_assoc(); 
+            if ($password === $row['password']) { 
                 $_SESSION['loggedin'] = true;
                 $_SESSION['userId'] = $row['id'];
                 $_SESSION['userEmail'] = $email;
-                $_SESSION['userJob'] = $row['job'];  // Store user role in session
+                $_SESSION['userJob'] = $row['job']; 
+                $_SESSION['name'] = $row['name'];
 
                 // Redirect user based on role
                 switch ($row['job']) {
                     case 'Admin':
                         header("location: index.php");
+                       // $_SESSION['name'] = "User"; 
                         exit;
                     case 'Intern':
                         header("location: index.php");
@@ -57,3 +57,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $conn->close(); // Close the database connection
 }
 ?>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login Page</title>
+    <link rel="stylesheet" type="text/css" href="css/form_styles.css">
+</head>
+<body>
+    <button class="home-button" onclick="location.href='index.php'"><img src="img/home.png"></button>  
+    <div class="main">
+        <div class="login">
+            <img src="img/logo.png" alt="Company Logo" class="logo">
+            <form action="login.php" method="POST">
+                <label for="chk" aria-hidden="true">Sign In</label>
+                <input type="email" name="email" placeholder="Email" required>
+                <input type="password" name="password" placeholder="Password" required>
+                <button type="submit">Sign In</button>
+            </form>
+        </div>
+    </div>
+</body>
+
+</html>

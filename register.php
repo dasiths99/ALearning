@@ -26,3 +26,37 @@ $conn->close();
 
 }
 ?>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Register Page</title>
+    <link rel="stylesheet" type="text/css" href="css/form_styles.css">
+</head>
+<body>
+    <button class="home-button" onclick="location.href='index.php'"><img src="img/home.png"></button>  
+    <div class="main">
+        <div class="signup">
+            <img src="img/logo.png" alt="Company Logo" class="logo">
+            <form action="register.php" method="post">
+                <label for="chk" aria-hidden="true">Register</label>
+                <input type="text" name="id" placeholder="Employee ID" required>
+                <input type="text" name="name" placeholder="Name" required>
+                <input type="email" name="email" placeholder="Email" required>
+                <input type="text" name="mobile" placeholder="Mobile" required>
+                <input type="password" name="password" placeholder="Password" required>
+                <select name="job" required>
+                    <option value="">Select Account Type</option>
+                    <option value="Admin">Admin</option>
+                    <option value="Intern">Intern</option>
+                    <option value="HR">HR</option>
+                    <option value="Manager">Manager</option>
+                </select>
+                <button type="submit">Register</button>
+            </form>
+        </div>
+    </div>
+</body>
+
+</html>
+

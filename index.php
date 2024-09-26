@@ -1,6 +1,11 @@
 <?php
 session_start();
 
+
+
+
+$user_name = isset($_SESSION['name']) ? $_SESSION['name'] : 'Guest';
+
 ?>
 
 <!DOCTYPE html>
@@ -47,15 +52,21 @@ session_start();
         </button>
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <div class="navbar-nav ms-auto p-4 p-lg-0">
-                <a href="index.html" class="nav-item nav-link active">Home</a>
-                <a href="about.html" class="nav-item nav-link">About</a>
+                <a href="index.php" class="nav-item nav-link active">Home</a>
+                <a href="about.php" class="nav-item nav-link">About</a>
                 <a href="courses.php" class="nav-item nav-link">Courses</a>
 
-                <?php if (isset($_SESSION['loggedin']) && $_SESSION['loggedin']): ?>
-                    <a href="logout.php" class="btn btn-primary py-4 px-lg-5 d-none d-lg-block">Logout<i class="fa fa-arrow-right ms-3"></i></a>
+                <div class="nav-item dropdown">
+                    <a href="#" class="btn btn-primary py-4 px-lg-5 d-none d-lg-block" data-bs-toggle="dropdown"><?php echo htmlspecialchars($user_name); ?></a>
+                    <div class="dropdown-menu fade-down m-0">
+                        <a href="team.html" class="dropdown-item active">Profile</a>
+                        <a href="testimonial.html" class="dropdown-item">Dashboard</a>
+                        <a href="404.html" class="dropdown-item"><?php if (isset($_SESSION['loggedin']) && $_SESSION['loggedin']): ?>
+                    <a href="logout.php" class="dropdown-item">Logout<i class="fa fa-arrow-right ms-3"></i></a>
                 <?php else: ?>
-                    <a href="login.html" class="btn btn-primary py-4 px-lg-5 d-none d-lg-block">Login<i class="fa fa-arrow-right ms-3"></i></a>
-                <?php endif; ?>
+                    <a href="login.php" class="dropdown-item">Login<i class="fa fa-arrow-right ms-3"></i></a>
+                <?php endif; ?> </a>
+                    </div>
     </nav>
     <!-- Navbar End -->
 
