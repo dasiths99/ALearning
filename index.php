@@ -2,9 +2,12 @@
 session_start();
 
 
-
-
 $user_name = isset($_SESSION['name']) ? $_SESSION['name'] : 'Guest';
+
+session_start();
+echo "<pre>";
+print_r($_SESSION);
+echo "</pre>";
 
 ?>
 
