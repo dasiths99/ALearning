@@ -6,7 +6,7 @@ include 'db.php'; // Include the database connection
 // Check if the user is logged in
 if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
     // If not logged in, redirect to the login page
-    header('location:login.html');
+    header('location:login.php');
     exit();
 }
 
@@ -143,6 +143,7 @@ $conn->close(); // Close the database connection
                 </div>
                 <a href="#" class="btn" onclick="enableEdit()">Edit Profile</a>
                 <a href="deleteprofile.php" onclick="return confirm('Are you sure you want to delete your account?');" class="btn">Delete Profile</a>
+
             </div>
 
             <!-- Profile Editing Mode (Hidden by Default) -->
