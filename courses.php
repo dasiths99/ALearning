@@ -1,31 +1,44 @@
 <?php
-session_start(); 
+session_start();
+include 'db.php'; // Ensure this includes your database connection logic
 
-include 'db.php'; 
+// Enable error reporting
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 
+// Check if the user is logged in
+if (!isset($_SESSION['loggedin']) || !$_SESSION['loggedin']) {
+    header("Location: login.php");
+    exit;
+}
 
+// Check if userId is set in session
+if (!isset($_SESSION['userId'])) {
+    echo "User ID not found in session.";
+    exit;
+}
 
+// Fetch user job role from session
+$userJob = $_SESSION['userJob']; // Make sure this is set during login
 
-                // Redirect user based on role
-                switch ($row['job']) {
-                    case 'Admin':
-                        header("location: index.php");
-                       // $_SESSION['name'] = "User"; 
-                        exit;
-                    case 'Intern':
-                        header("location: index.php");
-                        exit;
-                    case 'HR':
-                        header("location: hr_dashboard.php");
-                        exit;
-                    case 'Manager':
-                        header("location: manager_dashboard.php");
-                        exit;
-                    default:
-                        header("location: user_dashboard.php");  // Default redirection
-                        exit;
-                }
-                
-        $stmt->close(); // Close the statement
+// Redirect user to the course based on their job role
+switch ($userJob) {
+    case 'Admin':
+        header("Location: test.php");
+        break;
+    case 'Intern':
+        header("Location: intern_courses.php");
+        break;
+    case 'HR':
+        header("Location: hr_courses.php");
+        break;
+    case 'Manager':
+        header("Location: manager_courses.php");
+        break;
+    default:
+        echo "No courses available for your job role.";
+        break;
+}
 
+exit; // Ensure the script stops executing after the redirect
 ?>
