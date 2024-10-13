@@ -1,5 +1,7 @@
 <?php
 session_start();
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 include 'db.php'; // Ensure you have a database connection here
 
 // Check if the user is logged in
@@ -13,16 +15,30 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
 $userId = $_SESSION['userId'];
 
 // Query to get course marks from the database for the logged-in user
-$sql = "SELECT course1_marks, course2_marks, course3_marks FROM user_marks WHERE userId = ?";
+$sql = "SELECT course1_mark, course2_mark, course3_mark FROM user WHERE id = ?";
 $stmt = $conn->prepare($sql);
+
+if ($stmt === false) {
+    die('Prepare failed: ' . htmlspecialchars($conn->error));
+}
+
 $stmt->bind_param("i", $userId);
 $stmt->execute();
 $result = $stmt->get_result();
+
+if ($result === false) {
+    die('Execute failed: ' . htmlspecialchars($stmt->error));
+}
+
 $row = $result->fetch_assoc();
 
-$course1 = $row['course1_marks'];
-$course2 = $row['course2_marks'];
-$course3 = $row['course3_marks'];
+if ($row === null) {
+    die('No data found for user.');
+}
+
+$course1 = $row['course1_mark'];
+$course2 = $row['course2_mark'];
+$course3 = $row['course3_mark'];
 $overall = ($course1 + $course2 + $course3) / 3; // Calculate overall average
 
 $stmt->close();

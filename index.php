@@ -65,7 +65,7 @@ echo "</pre>";
                     <a href="#" class="btn btn-primary py-4 px-lg-5 d-none d-lg-block" data-bs-toggle="dropdown"><?php echo htmlspecialchars($user_name); ?></a>
                     <div class="dropdown-menu fade-down m-0">
                         <a href="profile.php" class="dropdown-item active">Profile</a>
-                        <a href="testimonial.html" class="dropdown-item">Dashboard</a>
+                        <a href="dashboard.php" class="dropdown-item">Dashboard</a>
                         <a href="404.html" class="dropdown-item"><?php if (isset($_SESSION['loggedin']) && $_SESSION['loggedin']): ?>
                     <a href="logout.php" class="dropdown-item">Logout<i class="fa fa-arrow-right ms-3"></i></a>
                 <?php else: ?>
