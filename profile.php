@@ -1,11 +1,6 @@
 <?php
 session_start(); // Start or resume the session
 
-session_start();
-echo "<pre>";
-print_r($_SESSION);
-echo "</pre>";
-
 include 'db.php'; // Include the database connection
 
 // Check if the user is logged in
@@ -89,8 +84,25 @@ $conn->close(); // Close the database connection
 
     <!-- Custom Template Stylesheet -->
     <link href="css/style.css" rel="stylesheet">
-    <link href="css/profile.css" rel="stylesheet">
-
+    <style>
+        .profile-container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        .profile-details th, .profile-details td {
+            padding: 10px;
+        }
+        .profile-details th {
+            width: 30%;
+            text-align: left;
+        }
+        .profile-details td {
+            width: 70%;
+        }
+        .form-control {
+            margin-bottom: 10px;
+        }
+    </style>
     <script>
         function enableEdit() {
             document.getElementById('viewProfile').style.display = 'none'; // Hide profile view
@@ -102,13 +114,12 @@ $conn->close(); // Close the database connection
             document.getElementById('editProfile').style.display = 'none'; // Hide edit form
         }
     </script>
-    
 </head>
 <body>
-     <!-- Navbar Start -->
-     <nav class="navbar navbar-expand-lg bg-white navbar-light shadow sticky-top p-0">
+    <!-- Navbar Start -->
+    <nav class="navbar navbar-expand-lg bg-white navbar-light shadow sticky-top p-0">
         <a href="index.html" class="navbar-brand d-flex align-items-center px-4 px-lg-5">
-            <img src="img/logo.png">
+            <img src="img/logo.png" alt="Logo">
         </a>
         <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
             <span class="navbar-toggler-icon"></span>
@@ -116,32 +127,31 @@ $conn->close(); // Close the database connection
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <div class="navbar-nav ms-auto p-4 p-lg-0">
                 <a href="index.php" class="nav-item nav-link">Home</a>
-                <a href="about.php" class="nav-item nav-link active">About</a>
+                <a href="about.php" class="nav-item nav-link">About</a>
                 <a href="courses.php" class="nav-item nav-link">Courses</a>
                 <div class="nav-item dropdown">
-                    <a href="#" class="btn btn-primary py-4 px-lg-5 d-none d-lg-block" data-bs-toggle="dropdown"><?php echo htmlspecialchars($user_name); ?></a>
+                    <a href="#" class="btn btn-primary py-4 px-lg-5 d-none d-lg-block" data-bs-toggle="dropdown"><?php echo htmlspecialchars($name); ?></a>
                     <div class="dropdown-menu fade-down m-0">
-                        <a href="team.html" class="dropdown-item active">Profile</a>
-                        <a href="testimonial.html" class="dropdown-item">Dashboard</a>
-                        <a href="404.html" class="dropdown-item"><?php if (isset($_SESSION['loggedin']) && $_SESSION['loggedin']): ?>
-                    <a href="logout.php" class="dropdown-item">Logout<i class="fa fa-arrow-right ms-3"></i></a>
-                <?php else: ?>
-                    <a href="login.html" class="dropdown-item">Login<i class="fa fa-arrow-right ms-3"></i></a>
-                <?php endif; ?> </a>
+                        <a href="profile.php" class="dropdown-item">Profile</a>
+                        <a href="dashboard.php" class="dropdown-item">Dashboard</a>
+                        <a href="logout.php" class="dropdown-item">Logout<i class="fa fa-arrow-right ms-3"></i></a>
                     </div>
+                </div>
+            </div>
         </div>
     </nav>
     <!-- Navbar End -->
-    <div class="container">
-        <div class="content">
-            <h3>Hi, <span><?php echo htmlspecialchars($email); ?></span></h3>
-            <h1>Welcome to Your Profile</h1>
+
+    <!-- Profile Section -->
+    <div class="container py-5">
+        <h1 class="text-center mb-4">User Profile</h1>
+        <div class="profile-container">
 
             <!-- Profile Viewing Mode -->
             <div id="viewProfile">
                 <div class="profile-details">
-                    <h2>User Information</h2>
-                    <table>
+                    <h3 class="mb-3">Profile Information</h3>
+                    <table class="table">
                         <tr>
                             <th>Full Name:</th>
                             <td><?php echo htmlspecialchars($name); ?></td>
@@ -160,34 +170,99 @@ $conn->close(); // Close the database connection
                         </tr>
                     </table>
                 </div>
-                <a href="#" class="btn" onclick="enableEdit()">Edit Profile</a>
-                <a href="deleteprofile.php" onclick="return confirm('Are you sure you want to delete your account?');" class="btn">Delete Profile</a>
-
+                <a href="#" class="btn btn-primary" onclick="enableEdit()">Edit Profile</a>
+                <a href="deleteprofile.php" onclick="return confirm('Are you sure you want to delete your account?');" class="btn btn-danger">Delete Profile</a>
             </div>
 
             <!-- Profile Editing Mode (Hidden by Default) -->
             <div id="editProfile" style="display: none;">
                 <form method="POST" action="profile.php">
-                    <table>
-                        <tr>
-                            <th>Full Name:</th>
-                            <td><input type="text" name="name" value="<?php echo htmlspecialchars($name); ?>" required></td>
-                        </tr>
-                        <tr>
-                            <th>Email:</th>
-                            <td><input type="email" name="email" value="<?php echo htmlspecialchars($email); ?>" required></td>
-                        </tr>
-                        <tr>
-                            <th>Phone Number:</th>
-                            <td><input type="text" name="mobile" value="<?php echo htmlspecialchars($mobile); ?>" required></td>
-                        </tr>
-                    </table>
-                    <input type="submit" class="btn btn-primary" value="Upload">
+                    <h3>Edit Profile</h3>
+                    <div class="form-group">
+                        <label for="name">Full Name</label>
+                        <input type="text" id="name" name="name" class="form-control" value="<?php echo htmlspecialchars($name); ?>" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" class="form-control" value="<?php echo htmlspecialchars($email); ?>" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="mobile">Phone Number</label>
+                        <input type="text" id="mobile" name="mobile" class="form-control" value="<?php echo htmlspecialchars($mobile); ?>" required>
+                    </div>
+                    <input type="submit" class="btn btn-primary" value="Update Profile">
                     <a href="#" class="btn btn-secondary" onclick="disableEdit()">Cancel</a>
                 </form>
             </div>
         </div>
     </div>
+
+    <!-- Footer Start -->
+    <div class="container-fluid bg-dark text-light footer pt-5 mt-5 wow fadeIn" data-wow-delay="0.1s">
+        <div class="container py-5">
+            <div class="row g-5">
+                <div class="col-lg-3 col-md-6">
+                    <h4 class="text-white mb-3">Quick Link</h4>
+                    <a class="btn btn-link" href="#">About Us</a>
+                    <a class="btn btn-link" href="#">Contact Us</a>
+                    <a class="btn btn-link" href="#">Privacy Policy</a>
+                    <a class="btn btn-link" href="#">Terms & Condition</a>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <h4 class="text-white mb-3">Contact</h4>
+                    <p class="mb-2"><i class="fa fa-map-marker-alt me-3"></i>Arpico, Sri Lanka</p>
+                    <p class="mb-2"><i class="fa fa-phone-alt me-3"></i>+012 345 67890</p>
+                    <p class="mb-2"><i class="fa fa-envelope me-3"></i>contact@arpico.com</p>
+                    <div class="d-flex pt-2">
+                        <a class="btn btn-outline-light btn-social" href=""><i class="fab fa-twitter"></i></a>
+                        <a class="btn btn-outline-light btn-social" href=""><i class="fab fa-facebook-f"></i></a>
+                        <a class="btn btn-outline-light btn-social" href=""><i class="fab fa-youtube"></i></a>
+                        <a class="btn btn-outline-light btn-social" href=""><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <h4 class="text-white mb-3">Gallery</h4>
+                    <div class="row g-2 pt-2">
+                        <div class="col-4">
+                            <img class="img-fluid bg-light p-1" src="img/course-1.jpg" alt="">
+                        </div>
+                        <div class="col-4">
+                            <img class="img-fluid bg-light p-1" src="img/course-2.jpg" alt="">
+                        </div>
+                        <div class="col-4">
+                            <img class="img-fluid bg-light p-1" src="img/course-3.jpg" alt="">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <h4 class="text-white mb-3">Newsletter</h4>
+                    <p>Subscribe to Newsletter</p>
+                    <div class="position-relative mx-auto" style="max-width: 400px;">
+                        <input class="form-control border-0 w-100 py-3 ps-4 pe-5" type="text" placeholder="Your email">
+                        <button type="button" class="btn btn-primary py-2 position-absolute top-0 end-0 mt-2 me-2">SignUp</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="copyright">
+                <div class="row">
+                    <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
+                        &copy; <a class="border-bottom" href="#">Arpico</a>, All Right Reserved.
+                    </div>
+                    <div class="col-md-6 text-center text-md-end">
+                        <div class="footer-menu">
+                            <a href="">Home</a>
+                            <a href="">Cookies</a>
+                            <a href="">Help</a>
+                            <a href="">FAQs</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Footer End -->
 
     <!-- Bootstrap JS and other required libraries -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
