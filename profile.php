@@ -142,10 +142,18 @@ $conn->close(); // Close the database connection
     </nav>
     <!-- Navbar End -->
 
+<<<<<<< Updated upstream
     <!-- Profile Section -->
     <div class="container py-5">
         <h1 class="text-center mb-4">User Profile</h1>
         <div class="profile-container">
+=======
+    
+    <div class="container">
+        <div class="content">
+            <h3>Hi, <span><?php echo htmlspecialchars($email); ?></span></h3>
+            <h1>Welcome to Your Profile</h1>
+>>>>>>> Stashed changes
 
             <!-- Profile Viewing Mode -->
             <div id="viewProfile">
