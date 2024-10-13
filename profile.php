@@ -1,6 +1,11 @@
 <?php
 session_start(); // Start or resume the session
 
+session_start();
+echo "<pre>";
+print_r($_SESSION);
+echo "</pre>";
+
 include 'db.php'; // Include the database connection
 
 // Check if the user is logged in
